@@ -264,7 +264,10 @@ class SearchSlave(SlaveDelegate):
         """
         Grabs the focus of the search entry
         """
-        self.search_entry.grab_focus()
+        # Check if we have the focus before grabbing it,
+        # otherwise the text will be selected.
+        if not self.search_entry.has_focus():
+            self.search_entry.grab_focus()
 
     def disable_search_entry(self):
         """
