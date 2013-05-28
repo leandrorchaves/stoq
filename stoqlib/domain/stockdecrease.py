@@ -29,7 +29,8 @@ from storm.references import Reference
 from zope.interface import implements
 
 from stoqlib.database.properties import (UnicodeCol, DateTimeCol, IntCol,
-                                         PriceCol, QuantityCol, IdentifierCol)
+                                         PriceCol, QuantityCol, IdentifierCol,
+                                         UUIDCol)
 from stoqlib.domain.base import Domain
 from stoqlib.domain.interfaces import IContainer
 from stoqlib.domain.product import ProductHistory, StockTransactionHistory
@@ -54,17 +55,17 @@ class StockDecreaseItem(Domain):
 
     __storm_table__ = 'stock_decrease_item'
 
-    stock_decrease_id = IntCol(default=None)
+    stock_decrease_id = UUIDCol(default=None)
 
     #: The stock decrease this item belongs to
     stock_decrease = Reference(stock_decrease_id, 'StockDecrease.id')
 
-    sellable_id = IntCol()
+    sellable_id = UUIDCol()
 
     #: the |sellable| for this decrease
     sellable = Reference(sellable_id, 'Sellable.id')
 
-    batch_id = IntCol()
+    batch_id = UUIDCol()
 
     #: If the sellable is a storable, the |batch| that it was removed from
     batch = Reference(batch_id, 'StorableBatch.id')
@@ -142,30 +143,30 @@ class StockDecrease(Domain):
     #: the date sale was created
     confirm_date = DateTimeCol(default_factory=localnow)
 
-    responsible_id = IntCol()
+    responsible_id = UUIDCol()
 
     #: who should be blamed for this
     responsible = Reference(responsible_id, 'LoginUser.id')
 
-    removed_by_id = IntCol()
+    removed_by_id = UUIDCol()
 
     removed_by = Reference(removed_by_id, 'Employee.id')
 
-    branch_id = IntCol()
+    branch_id = UUIDCol()
 
     #: branch where the sale was done
     branch = Reference(branch_id, 'Branch.id')
 
-    cfop_id = IntCol()
+    cfop_id = UUIDCol()
 
     cfop = Reference(cfop_id, 'CfopData.id')
 
-    group_id = IntCol()
+    group_id = UUIDCol()
 
     #: the payment group related to this stock decrease
     group = Reference(group_id, 'PaymentGroup.id')
 
-    cost_center_id = IntCol()
+    cost_center_id = UUIDCol()
 
     #: the |costcenter| that the cost of the products decreased in this stock
     #: decrease should be accounted for. When confirming a stock decrease with

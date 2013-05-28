@@ -37,7 +37,7 @@ from zope.interface import implements
 
 from stoqlib.database.expr import StoqNormalizeString
 from stoqlib.database.orm import ORMObject
-from stoqlib.database.properties import UnicodeCol, IntCol, BoolCol
+from stoqlib.database.properties import UnicodeCol, IntCol, BoolCol, UUIDCol
 from stoqlib.domain.base import Domain
 from stoqlib.domain.interfaces import IDescribable
 from stoqlib.l10n.l10n import get_l10n_field
@@ -58,6 +58,8 @@ def _get_equal_clause(table, value):
             StoqNormalizeString(value))
 
 
+# CityLocation inherits from ORMObject to avoid having te_id for a table
+# that never is modified after initial import.
 class CityLocation(ORMObject):
     """CityLocation is a class that contains the location of a city
     and it's state/country. There are also codes for the city and states.
@@ -223,12 +225,12 @@ class Address(Domain):
     #: when you register a person for the first time.
     is_main_address = BoolCol(default=False)
 
-    person_id = IntCol()
+    person_id = UUIDCol()
 
     #: the |person| who resides at this address
     person = Reference(person_id, 'Person.id')
 
-    city_location_id = IntCol()
+    city_location_id = UUIDCol()
 
     #: the |citylocation| this address is in
     city_location = Reference(city_location_id, 'CityLocation.id')

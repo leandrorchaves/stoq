@@ -27,7 +27,7 @@
 from kiwi.component import get_utility
 from storm.references import Reference, ReferenceSet
 
-from stoqlib.database.properties import UnicodeCol, IntCol, BoolCol
+from stoqlib.database.properties import UnicodeCol, BoolCol, UUIDCol
 from stoqlib.domain.base import Domain
 from stoqlib.lib.interfaces import IApplicationDescriptions
 from stoqlib.lib.translation import stoqlib_gettext as _
@@ -41,7 +41,7 @@ class ProfileSettings(Domain):
     __storm_table__ = 'profile_settings'
     app_dir_name = UnicodeCol()
     has_permission = BoolCol(default=False)
-    user_profile_id = IntCol()
+    user_profile_id = UUIDCol()
     user_profile = Reference(user_profile_id, 'UserProfile.id')
 
     @classmethod

@@ -985,7 +985,7 @@ class ParameterAccess(ClassInittableObject):
         if issubclass(field_type, Domain):
             if value.field_value == u'' or value.field_value is None:
                 return
-            param = self.store.get(field_type, int(value.field_value))
+            param = self.store.get(field_type, unicode(value.field_value))
             if param is None:
                 return None
         else:

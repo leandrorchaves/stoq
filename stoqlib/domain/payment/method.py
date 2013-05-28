@@ -32,7 +32,7 @@ from storm.references import Reference
 from zope.interface import implements
 
 from stoqlib.database.expr import TransactionTimestamp
-from stoqlib.database.properties import IntCol, BoolCol, UnicodeCol
+from stoqlib.database.properties import IntCol, BoolCol, UnicodeCol, UUIDCol
 from stoqlib.database.properties import PercentCol
 from stoqlib.domain.base import Domain
 from stoqlib.domain.interfaces import IActive, IDescribable
@@ -56,12 +56,12 @@ class CheckData(Domain):
 
     __storm_table__ = 'check_data'
 
-    payment_id = IntCol()
+    payment_id = UUIDCol()
 
     #: the :class:`payment <stoqlib.domain.payment.Payment>`
     payment = Reference(payment_id, 'Payment.id')
 
-    bank_account_id = IntCol()
+    bank_account_id = UUIDCol()
 
     #: the :class:`bank account <stoqlib.domain.account.BankAccount>`
     bank_account = Reference(bank_account_id, 'BankAccount.id')
@@ -104,7 +104,7 @@ class PaymentMethod(Domain):
     #: payment_day? Sales after this day will be paid only in the next month.
     closing_day = IntCol(default=None)
     max_installments = IntCol(default=1)
-    destination_account_id = IntCol(default=None)
+    destination_account_id = UUIDCol(default=None)
     destination_account = Reference(destination_account_id, 'Account.id')
 
     #

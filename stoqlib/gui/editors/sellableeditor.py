@@ -225,7 +225,7 @@ class SellableEditor(BaseEditor):
         edit_code_product = sysparam(self.store).EDIT_CODE_PRODUCT
         self.code.set_sensitive(not edit_code_product and not self.visual_mode)
         if not self.code.read():
-            code = u'%d' % self._sellable.id
+            code = u'%d' % (self.store.find(Sellable).count() + 1, )
             self.code.update(code)
 
         self.description.grab_focus()

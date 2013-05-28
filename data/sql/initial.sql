@@ -1,3 +1,6 @@
+-- We use UUID table IDS which is included since PostgreSQL 8.3
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Insert our brazilian city list. There's no need to check for existing
 -- cities because, this will be used on a fresh database.
 -- This data was adapted from:

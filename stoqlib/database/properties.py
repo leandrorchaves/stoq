@@ -28,9 +28,11 @@ import warnings
 from kiwi.currency import currency
 
 from storm.properties import RawStr, Int, Bool, DateTime, Decimal, Unicode
+from storm.properties import SimpleProperty
 from storm.store import AutoReload
 from storm.variables import (DateVariable, DateTimeVariable,
-                             DecimalVariable, IntVariable)
+                             DecimalVariable, IntVariable,
+                             Variable)
 
 from stoqlib.lib.defaults import QUANTITY_PRECISION
 
@@ -120,6 +122,18 @@ class MyDateTimeVariable(DateTimeVariable, DateVariable):
 
 class DateTimeCol(DateTime):
     variable_class = MyDateTimeVariable
+
+
+class UUIDVariable(Variable):
+    __slots__ = ()
+
+    # FIXME: avoid the need this
+    def parse_set(self, value, from_db):
+        return unicode(value)
+
+
+class UUIDCol(SimpleProperty):
+    variable_class = UUIDVariable
 
 
 # Columns, we're keeping the Col suffix to avoid clashes between
